@@ -20,8 +20,13 @@ API (optional): `uvicorn api.main:app --port 8000`
 
 1. Push repo to GitHub (includes `deploy/artifacts/`).
 2. [share.streamlit.io](https://share.streamlit.io) → **New app**
-3. **Main file path:** `run_dashboard.py`
-4. Deploy (~5–10 min first build).
+3. **Repository:** `shubhangini67/fault-detection-for-predictive-maintenance-in-industry-4.0`
+4. **Branch:** `master`
+5. **Main file path:** `run_dashboard.py`
+6. **Advanced settings → Python version:** `3.11` (required for TensorFlow)
+7. Deploy (~5–10 min first build).
+
+If dependency install fails, confirm Python **3.11** is selected (not 3.13), then **Reboot app** or redeploy.
 
 ---
 

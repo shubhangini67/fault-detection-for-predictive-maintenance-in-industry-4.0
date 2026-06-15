@@ -7,10 +7,13 @@ from pathlib import Path
 
 import streamlit as st
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 
+from src.bootstrap import ensure_deploy_artifacts
 from dashboard.layout import inject_theme
+
+ensure_deploy_artifacts()
 
 st.set_page_config(
     page_title="Fault Detection Platform",
