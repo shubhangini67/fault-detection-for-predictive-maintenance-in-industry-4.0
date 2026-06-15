@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import re
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -24,8 +23,7 @@ def _models_dir(config: dict) -> Path:
     return path
 
 
-def _scenario_prefix(fault_key: str) -> str:
-    return re.sub(r"[\s\-_]+", "_", fault_key.strip()).strip("_")
+from src.scenario_utils import scenario_prefix as _scenario_prefix
 
 
 def build_autoencoder(input_dim: int, config: dict) -> tf.keras.Model:

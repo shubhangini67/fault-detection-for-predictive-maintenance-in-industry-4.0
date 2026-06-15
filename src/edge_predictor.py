@@ -7,11 +7,16 @@ from dataclasses import dataclass
 import joblib
 import numpy as np
 import pandas as pd
-import tensorflow as tf
 
 from src.config import load_config, resolve_path
 from src.maintenance import recommend_maintenance, recommendation_to_dict
-from src.train_models import _scenario_prefix
+from src.scenario_utils import scenario_prefix as _scenario_prefix
+
+
+def _tensorflow():
+    import tensorflow as tf
+
+    return tf
 
 
 @dataclass
@@ -47,7 +52,7 @@ class EdgePredictor:
         meta_path = self.models_dir / f"ae_meta_{self.prefix}.joblib"
         if not keras_path.exists():
             raise FileNotFoundError(f"Autoencoder not trained for {self.scenario_key}")
-        model = tf.keras.models.load_model(keras_path)
+        model = _tensorflow().keras.models.load_model(keras_path)
         scaler = joblib.load(scaler_path)
         meta = joblib.load(meta_path)
         return model, scaler, meta
@@ -124,7 +129,7 @@ class EdgePredictor:
         _, scaler, meta = self._load_autoencoder_bundle()
         x = scaler.transform(df[self.features].values).astype(np.float32)
 
-        interpreter = tf.lite.Interpreter(model_path=str(tflite_path))
+        interpreter = _tensorflow().lite.Interpreter(model_path=str(tflite_path))
         interpreter.allocate_tensors()
         input_index = interpreter.get_input_details()[0]["index"]
         output_index = interpreter.get_output_details()[0]["index"]

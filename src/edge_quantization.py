@@ -11,7 +11,7 @@ import tensorflow as tf
 
 from src.config import load_config, resolve_path
 from src.data_loader import build_autoencoder_dataset
-from src.train_models import _scenario_prefix
+from src.scenario_utils import scenario_prefix as _scenario_prefix
 
 
 def _file_size_kb(path: Path) -> float:

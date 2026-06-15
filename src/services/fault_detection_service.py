@@ -12,10 +12,8 @@ import pandas as pd
 from src.bootstrap import ensure_deploy_artifacts
 from src.config import load_config, resolve_path
 from src.data_loader import list_fault_scenarios, load_stream_chunk
-from src.edge_predictor import EdgeInferenceResult, EdgePredictor
-from src.edge_quantization import quantize_autoencoder
 from src.model_registry import deployment_status, list_deployed_scenarios, models_exist
-from src.train_models import _scenario_prefix, train_all
+from src.scenario_utils import scenario_prefix
 
 
 @dataclass
@@ -78,6 +76,8 @@ class FaultDetectionService:
         offset: int = 0,
         buffer_size: int = 400,
     ) -> PredictionResponse:
+        from src.edge_predictor import EdgeInferenceResult, EdgePredictor
+
         if not models_exist(scenario):
             raise FileNotFoundError(
                 f"Models not deployed for '{scenario}'. Train or restore artifacts first."
@@ -134,6 +134,9 @@ class FaultDetectionService:
         )
 
     def train_scenario(self, scenario: str, sample_size: int = 2000) -> dict:
+        from src.edge_quantization import quantize_autoencoder
+        from src.train_models import train_all
+
         result = train_all(scenario, sample_size=sample_size)
         try:
             quantize_autoencoder(scenario, sample_size=min(sample_size, 1500))
@@ -151,7 +154,7 @@ class FaultDetectionService:
         return ensure_deploy_artifacts()
 
     def quantization_report(self, scenario: str) -> dict | None:
-        path = resolve_path("models") / f"quantization_{_scenario_prefix(scenario)}.json"
+        path = resolve_path("models") / f"quantization_{scenario_prefix(scenario)}.json"
         if not path.exists():
             return None
         with open(path, encoding="utf-8") as f:

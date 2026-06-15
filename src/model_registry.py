@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from src.config import resolve_path
 from src.data_loader import list_fault_scenarios
-from src.train_models import _scenario_prefix
+from src.scenario_utils import scenario_prefix as _scenario_prefix
 
 
 def rf_artifact_path(scenario: str):
