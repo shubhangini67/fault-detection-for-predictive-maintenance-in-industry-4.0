@@ -1,0 +1,12 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.git/
+.gitignore
+.DS_Store
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+models/
+*.md
+!README.md

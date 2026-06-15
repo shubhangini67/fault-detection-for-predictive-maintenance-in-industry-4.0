@@ -1,0 +1,66 @@
+# Industrial Edge AI — Predictive Maintenance Configuration
+
+project:
+  name: "Industrial Equipment Fault Detection System"
+  version: "2.0.0"
+
+paths:
+  datasets_dir: "Datasets"
+  models_dir: "models"
+  artifacts_manifest: "models/manifest.json"
+
+data:
+  features: ["DE", "FE"]
+  test_size: 0.2
+  random_state: 0
+
+fault_profiles:
+  NB:
+    label: 0
+    display_name: "Normal Baseline"
+    severity: "none"
+    defect_size_in: 0.0
+  "IR - 7":
+    label: 1
+    display_name: "Inner Race Fault (0.007 in)"
+    severity: "early"
+    defect_size_in: 0.007
+  "IR - 21":
+    label: 1
+    display_name: "Inner Race Fault (0.021 in)"
+    severity: "critical"
+    defect_size_in: 0.021
+  "OR - 7":
+    label: 1
+    display_name: "Outer Race Fault (0.007 in)"
+    severity: "early"
+    defect_size_in: 0.007
+  "OR - 21":
+    label: 1
+    display_name: "Outer Race Fault (0.021 in)"
+    severity: "critical"
+    defect_size_in: 0.021
+
+training:
+  random_forest:
+    n_estimators: 10
+    criterion: "entropy"
+  autoencoder:
+    epochs: 20
+    batch_size: 1000
+    validation_split: 0.1
+    architecture: [32, 2, 32]
+    reconstruction_threshold: 0.1
+
+edge_ai:
+  target_device: "industrial_edge_gateway"
+  inference_mode: "on_device"
+  quantization:
+    enabled: true
+    formats: ["float32", "float16", "int8_dynamic"]
+    representative_samples: 500
+
+dashboard:
+  refresh_interval_sec: 5
+  default_scenario: "IR - 7"
+  stream_pool_size: 10000
