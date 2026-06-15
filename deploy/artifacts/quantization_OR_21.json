@@ -1,0 +1,27 @@
+{
+  "scenario": "OR - 21",
+  "variants": {
+    "float32": {
+      "path": "/Users/subu./Desktop/fault-detection-for-predictive-maintenance-in-industry-4.0/models/autoencoder_OR_21_fp32.tflite",
+      "size_kb": 3.86,
+      "latency_ms": 0.0007,
+      "quantization": "none",
+      "edge_use_case": "Reference deployment / validation on edge gateway"
+    },
+    "float16": {
+      "path": "/Users/subu./Desktop/fault-detection-for-predictive-maintenance-in-industry-4.0/models/autoencoder_OR_21_fp16.tflite",
+      "size_kb": 4.54,
+      "latency_ms": 0.0007,
+      "quantization": "float16",
+      "edge_use_case": "Industrial edge gateway with GPU/NPU acceleration"
+    },
+    "int8_dynamic": {
+      "path": "/Users/subu./Desktop/fault-detection-for-predictive-maintenance-in-industry-4.0/models/autoencoder_OR_21_int8.tflite",
+      "size_kb": 5.4,
+      "latency_ms": 0.0008,
+      "quantization": "int8_dynamic_range",
+      "edge_use_case": "Resource-constrained PLC / ARM edge node"
+    }
+  },
+  "compression_ratio_fp16": 0.85
+}

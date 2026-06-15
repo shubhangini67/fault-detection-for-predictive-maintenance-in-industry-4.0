@@ -1,0 +1,100 @@
+{
+  "OR - 7": {
+    "trained_at": "2026-06-15T17:36:37.954721+00:00",
+    "scenario": "OR - 7",
+    "random_forest": {
+      "model": "random_forest",
+      "scenario": "OR - 7",
+      "accuracy": 0.83875,
+      "f1": 0.8291390728476821,
+      "report": {
+        "0": {
+          "precision": 0.817351598173516,
+          "recall": 0.8796068796068796,
+          "f1-score": 0.8473372781065088,
+          "support": 407.0
+        },
+        "1": {
+          "precision": 0.8646408839779005,
+          "recall": 0.7964376590330788,
+          "f1-score": 0.8291390728476821,
+          "support": 393.0
+        },
+        "accuracy": 0.83875,
+        "macro avg": {
+          "precision": 0.8409962410757083,
+          "recall": 0.8380222693199793,
+          "f1-score": 0.8382381754770954,
+          "support": 800.0
+        },
+        "weighted avg": {
+          "precision": 0.84058245982492,
+          "recall": 0.83875,
+          "f1-score": 0.8383974097731101,
+          "support": 800.0
+        }
+      },
+      "edge_ready": true,
+      "artifact": "/Users/subu./Desktop/fault-detection-for-predictive-maintenance-in-industry-4.0/models/rf_OR_7.joblib"
+    },
+    "autoencoder": {
+      "model": "autoencoder",
+      "scenario": "OR - 7",
+      "accuracy": 0.6125,
+      "f1": 0.3673469387755102,
+      "reconstruction_threshold": 0.1,
+      "final_val_loss": 0.010274931788444519,
+      "edge_ready": true,
+      "artifact": "/Users/subu./Desktop/fault-detection-for-predictive-maintenance-in-industry-4.0/models/autoencoder_OR_7.keras"
+    }
+  },
+  "OR - 21": {
+    "trained_at": "2026-06-15T17:36:39.485063+00:00",
+    "scenario": "OR - 21",
+    "random_forest": {
+      "model": "random_forest",
+      "scenario": "OR - 21",
+      "accuracy": 0.74,
+      "f1": 0.717391304347826,
+      "report": {
+        "0": {
+          "precision": 0.7177242888402626,
+          "recall": 0.8058968058968059,
+          "f1-score": 0.7592592592592593,
+          "support": 407.0
+        },
+        "1": {
+          "precision": 0.7696793002915452,
+          "recall": 0.6717557251908397,
+          "f1-score": 0.717391304347826,
+          "support": 393.0
+        },
+        "accuracy": 0.74,
+        "macro avg": {
+          "precision": 0.7437017945659039,
+          "recall": 0.7388262655438228,
+          "f1-score": 0.7383252818035426,
+          "support": 800.0
+        },
+        "weighted avg": {
+          "precision": 0.7432471882157051,
+          "recall": 0.74,
+          "f1-score": 0.7386916264090178,
+          "support": 800.0
+        }
+      },
+      "edge_ready": true,
+      "artifact": "/Users/subu./Desktop/fault-detection-for-predictive-maintenance-in-industry-4.0/models/rf_OR_21.joblib"
+    },
+    "autoencoder": {
+      "model": "autoencoder",
+      "scenario": "OR - 21",
+      "accuracy": 0.52,
+      "f1": 0.07692307692307693,
+      "reconstruction_threshold": 0.1,
+      "final_val_loss": 0.00270474748685956,
+      "edge_ready": true,
+      "artifact": "/Users/subu./Desktop/fault-detection-for-predictive-maintenance-in-industry-4.0/models/autoencoder_OR_21.keras"
+    }
+  }
+}
