@@ -31,9 +31,14 @@ inject_theme()
 
 pages = st.navigation(
     [
-        st.Page("dashboard/pages/home.py", title="Home", icon="🏠", default=True),
-        st.Page("dashboard/pages/detect.py", title="Detect Faults", icon="🔍"),
-        st.Page("dashboard/pages/edge_ai.py", title="Edge AI Lab", icon="⚡"),
+        st.Page(str(ROOT / "dashboard/pages/home.py"), title="Home", icon="🏠", default=True),
+        st.Page(str(ROOT / "dashboard/pages/detect.py"), title="Detect Faults", icon="🔍"),
+        st.Page(str(ROOT / "dashboard/pages/edge_ai.py"), title="Edge AI Lab", icon="⚡"),
     ]
 )
-pages.run()
+
+try:
+    pages.run()
+except Exception as exc:
+    st.error("The dashboard hit an error during startup.")
+    st.exception(exc)

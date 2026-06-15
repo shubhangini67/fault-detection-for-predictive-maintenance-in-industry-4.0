@@ -19,6 +19,15 @@ def _tensorflow():
     return tf
 
 
+def _tflite_interpreter(model_path: str):
+    try:
+        from tflite_runtime.interpreter import Interpreter
+
+        return Interpreter(model_path=model_path)
+    except ImportError:
+        return _tensorflow().lite.Interpreter(model_path=model_path)
+
+
 @dataclass
 class EdgeInferenceResult:
     fault_detected: bool
@@ -46,15 +55,19 @@ class EdgePredictor:
             raise FileNotFoundError(f"Random Forest not trained for {self.scenario_key}")
         return joblib.load(clf_path), joblib.load(scaler_path)
 
-    def _load_autoencoder_bundle(self):
-        keras_path = self.models_dir / f"autoencoder_{self.prefix}.keras"
+    def _load_ae_aux(self):
         scaler_path = self.models_dir / f"ae_scaler_{self.prefix}.joblib"
         meta_path = self.models_dir / f"ae_meta_{self.prefix}.joblib"
+        if not scaler_path.exists() or not meta_path.exists():
+            raise FileNotFoundError(f"Autoencoder metadata not found for {self.scenario_key}")
+        return joblib.load(scaler_path), joblib.load(meta_path)
+
+    def _load_autoencoder_bundle(self):
+        keras_path = self.models_dir / f"autoencoder_{self.prefix}.keras"
         if not keras_path.exists():
             raise FileNotFoundError(f"Autoencoder not trained for {self.scenario_key}")
+        scaler, meta = self._load_ae_aux()
         model = _tensorflow().keras.models.load_model(keras_path)
-        scaler = joblib.load(scaler_path)
-        meta = joblib.load(meta_path)
         return model, scaler, meta
 
     def predict_random_forest(self, df: pd.DataFrame) -> EdgeInferenceResult:
@@ -126,10 +139,10 @@ class EdgePredictor:
                 f"TFLite model not found: {tflite_path}. Run scripts/quantize.py"
             )
 
-        _, scaler, meta = self._load_autoencoder_bundle()
+        scaler, meta = self._load_ae_aux()
         x = scaler.transform(df[self.features].values).astype(np.float32)
 
-        interpreter = _tensorflow().lite.Interpreter(model_path=str(tflite_path))
+        interpreter = _tflite_interpreter(str(tflite_path))
         interpreter.allocate_tensors()
         input_index = interpreter.get_input_details()[0]["index"]
         output_index = interpreter.get_output_details()[0]["index"]

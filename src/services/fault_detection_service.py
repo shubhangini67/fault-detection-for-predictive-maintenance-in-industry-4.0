@@ -77,6 +77,7 @@ class FaultDetectionService:
         buffer_size: int = 400,
     ) -> PredictionResponse:
         from src.edge_predictor import EdgeInferenceResult, EdgePredictor
+        from src.runtime import tensorflow_available
 
         if not models_exist(scenario):
             raise FileNotFoundError(
@@ -89,8 +90,10 @@ class FaultDetectionService:
 
         if engine in ("Random Forest", "Ensemble"):
             results["Random Forest"] = predictor.predict_random_forest(chunk)
-        if engine in ("Autoencoder", "Ensemble"):
+        if engine in ("Autoencoder", "Ensemble") and tensorflow_available():
             results["Autoencoder"] = predictor.predict_autoencoder(chunk)
+        elif engine == "Autoencoder":
+            raise RuntimeError("Autoencoder requires TensorFlow (local/Docker install).")
         if engine in ("TFLite FP16", "Ensemble"):
             try:
                 results["TFLite FP16"] = predictor.predict_tflite(chunk, variant="fp16")
@@ -134,6 +137,12 @@ class FaultDetectionService:
         )
 
     def train_scenario(self, scenario: str, sample_size: int = 2000) -> dict:
+        from src.runtime import tensorflow_available
+
+        if not tensorflow_available():
+            raise RuntimeError(
+                "Training requires TensorFlow. Install requirements-full.txt for local or Docker use."
+            )
         from src.edge_quantization import quantize_autoencoder
         from src.train_models import train_all
 

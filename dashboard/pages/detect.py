@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from dashboard.layout import maintenance_panel, metrics_row, page_header, styled_figure, verdict_banner
+from src.runtime import available_engines
 from src.services.fault_detection_service import FaultDetectionService
 
 svc = FaultDetectionService()
@@ -36,10 +37,7 @@ with st.container(border=True):
                 deployed,
                 format_func=lambda x: svc.cfg["fault_profiles"][x]["display_name"],
             )
-            engine = st.selectbox(
-                "ML engine",
-                ["Random Forest", "Autoencoder", "TFLite FP16", "Ensemble"],
-            )
+            engine = st.selectbox("ML engine", available_engines())
         with r1c2:
             buffer_size = st.slider("Sample count", 200, 800, 400, 50)
             offset = st.slider("Window offset", 0, 5000, 0, 100)
@@ -67,7 +65,11 @@ elif "detect_result" not in st.session_state:
     st.plotly_chart(styled_figure(fig), use_container_width=True)
     st.stop()
 
-result, chunk = st.session_state["detect_result"]
+result, chunk = st.session_state.get("detect_result", (None, None))
+if result is None or chunk is None:
+    st.info("Set options above and click **Run analysis**.")
+    st.stop()
+
 params = st.session_state.get("detect_params")
 current = (scenario, engine, offset, buffer_size)
 if params and params != current and not submitted:

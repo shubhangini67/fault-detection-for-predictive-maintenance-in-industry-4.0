@@ -1,0 +1,6 @@
+# Full stack for local dev, Docker, and training.
+-r requirements.txt
+tensorflow-cpu==2.15.1
+fastapi>=0.109.0
+uvicorn>=0.27.0
+pydantic>=2.0.0

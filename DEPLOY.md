@@ -41,7 +41,7 @@ If dependency install fails, confirm Python **3.11** is selected (not 3.13), the
 
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+pip install -r requirements-full.txt
 python scripts/bundle_artifacts.py
 python scripts/ensure_artifacts.py
 streamlit run run_dashboard.py

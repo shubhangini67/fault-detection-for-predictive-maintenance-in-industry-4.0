@@ -1,10 +1,10 @@
-# Streamlit Cloud: set Python 3.11 in app Advanced settings before deploy.
+# Streamlit Cloud — lightweight deps (no TensorFlow). Use Python 3.11.
 streamlit==1.41.1
 pandas==2.2.3
 numpy==1.26.4
 scikit-learn==1.5.2
-tensorflow-cpu==2.15.1
 joblib==1.4.2
 plotly==5.24.1
 pyyaml==6.0.2
+tflite-runtime==2.14.0
 protobuf>=3.20.3,<5
