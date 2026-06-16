@@ -1,6 +1,8 @@
-# Full stack for local dev, Docker, and training.
+# Full stack for local dev, Docker, and training (Python 3.11 recommended).
 -r requirements.txt
 tensorflow-cpu==2.15.1
+tflite-runtime==2.14.0; python_version < "3.12"
 fastapi>=0.109.0
 uvicorn>=0.27.0
 pydantic>=2.0.0
+protobuf>=3.20.3,<5

@@ -23,10 +23,10 @@ API (optional): `uvicorn api.main:app --port 8000`
 3. **Repository:** `shubhangini67/fault-detection-for-predictive-maintenance-in-industry-4.0`
 4. **Branch:** `master`
 5. **Main file path:** `run_dashboard.py`
-6. **Advanced settings → Python version:** `3.11` (required for TensorFlow)
-7. Deploy (~5–10 min first build).
+6. **Advanced settings → Python version:** `3.11` or `3.12` (cloud uses RF only; TFLite needs local install)
+7. Deploy (~2–3 min first build with fixed requirements).
 
-If dependency install fails, confirm Python **3.11** is selected (not 3.13), then **Reboot app** or redeploy.
+If install runs longer than 10 minutes, **cancel and reboot** — an old build may be compiling pandas from source due to a bad dependency pin.
 
 ---
 

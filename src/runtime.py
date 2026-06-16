@@ -12,8 +12,19 @@ def tensorflow_available() -> bool:
         return False
 
 
+def tflite_available() -> bool:
+    try:
+        from tflite_runtime.interpreter import Interpreter  # noqa: F401
+
+        return True
+    except ImportError:
+        return tensorflow_available()
+
+
 def available_engines() -> list[str]:
-    engines = ["Random Forest", "TFLite FP16"]
+    engines = ["Random Forest"]
+    if tflite_available():
+        engines.append("TFLite FP16")
     if tensorflow_available():
         engines.extend(["Autoencoder", "Ensemble"])
     return engines
