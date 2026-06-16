@@ -13,6 +13,7 @@ os.environ.setdefault("CUDA_VISIBLE_DEVICES", "")
 import streamlit as st
 
 ROOT = Path(__file__).resolve().parent
+os.chdir(ROOT)
 sys.path.insert(0, str(ROOT))
 
 from src.bootstrap import ensure_deploy_artifacts
