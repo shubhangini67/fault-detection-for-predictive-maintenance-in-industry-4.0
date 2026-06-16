@@ -22,7 +22,7 @@ API (optional): `uvicorn api.main:app --port 8000`
 2. [share.streamlit.io](https://share.streamlit.io) → **New app**
 3. **Repository:** `shubhangini67/fault-detection-for-predictive-maintenance-in-industry-4.0`
 4. **Branch:** `master`
-5. **Main file path:** `run_dashboard.py`
+5. **Main file path:** `streamlit_app.py` (or `run_dashboard.py`)
 6. **Advanced settings → Python version:** `3.11` or `3.12` (cloud uses RF only; TFLite needs local install)
 7. Deploy (~2–3 min first build with fixed requirements).
 

@@ -7,8 +7,11 @@ from typing import Any
 
 import yaml
 
+from src.platform import on_streamlit_cloud
+
 ROOT_DIR = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT_DIR / "config" / "settings.yaml"
+CLOUD_ARTIFACTS = ROOT_DIR / "deploy" / "artifacts"
 
 
 def load_config(path: Path | None = None) -> dict[str, Any]:
@@ -18,4 +21,6 @@ def load_config(path: Path | None = None) -> dict[str, Any]:
 
 
 def resolve_path(relative: str) -> Path:
+    if relative == "models" and on_streamlit_cloud() and CLOUD_ARTIFACTS.is_dir():
+        return CLOUD_ARTIFACTS
     return ROOT_DIR / relative
